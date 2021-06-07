@@ -23,7 +23,7 @@ namespace FootballService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,9 +47,15 @@ namespace FootballService
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseSwagger(c =>
             {
-                endpoints.MapRazorPages();
+                c.SerializeAsV2 = true;
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
             });
         }
     }
